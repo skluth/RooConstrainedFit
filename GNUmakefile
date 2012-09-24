@@ -2,7 +2,7 @@
 LD = $(CXX)
 CXXFLAGS = -Wall
 
-LIBFILES = Constraints.cc
+LIBFILES = Constraints.cc ClsqSolver.cc
 TESTFILE = testConstraints.cc
 TESTEXE = $(basename $(TESTFILE) )
 LIBOBJS = $(LIBFILES:.cc=.o)
@@ -24,7 +24,6 @@ libRooConstrainedFit.so: $(LIBOBJS)
 
 $(TESTEXE): $(TESTFILE:.cc=.o) libRooConstrainedFit.so
 	$(LD) -o $@ $^ -lboost_unit_test_framework $(LDFLAGS) $(LDLIBS)
-#	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(PWD) ./$@ --log_level=message
 	./$@ --log_level=message
 
 clean:
