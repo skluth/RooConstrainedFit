@@ -13,6 +13,7 @@ class ConstraintFunction;
 class Constraints {
 
 public:
+
   Constraints( const ConstraintFunction&, Double_t epsilon=1.0e-4 );
 
   TVectorD calculate( const TVectorD&, const TVectorD& );

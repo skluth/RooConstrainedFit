@@ -10,12 +10,13 @@
 
 #include "ClsqSolver.hh"
 
+#include <iostream>
 #include <string>
 #include <vector>
-#include <iostream>
+#include <map>
 using std::string;
 using std::vector;
-
+using std::map;
 
 #include "TVectorD.h"
 #include "TMatrixDSym.h"
@@ -98,54 +99,51 @@ BOOST_AUTO_TEST_CASE( testCalculate ) {
   }
 }
 
-
-
-
+// End this suite:
 BOOST_AUTO_TEST_SUITE_END()
 
-
-
-
+// Fixture for next suite:
 class ClsqSolverTestFixture {
 public:
   ClsqSolverTestFixture() : dodo(), 
-			    lcf( dodo.xabs ), 
-			    clsq( dodo.data,
-				  dodo.covm,
-				  dodo.upar,
-				  lcf ) {
+			    lcf( dodo.xabs ) {
+    map<int,string> uparnames;
+    uparnames[0]= "zero";
+    map<int,string> mparnames;
+    mparnames[1]= "one";
+    mparnames[3]= "three";
+    clsq= new ClsqSolver( dodo.data, dodo.covm, dodo.upar, lcf,
+			  uparnames, mparnames );
     BOOST_MESSAGE( "Create ClsqSolverTestFixture" );
   }
   virtual ~ClsqSolverTestFixture() {
+    delete clsq;
     BOOST_MESSAGE( "Tear down ClsqSolverTestFixture" );
   }
   Dodo dodo;
   LinearConstraintFunction lcf;
-  ClsqSolver clsq;
+  ClsqSolver* clsq;
 };
-
-
-// End this suite:
 BOOST_FIXTURE_TEST_SUITE( clsqsolversuite, ClsqSolverTestFixture )
 
 
-// Fixture for next suite:
+// Test clsq parameter names:
 BOOST_AUTO_TEST_CASE( testClsqMParNames ) {
-  vector<string> parnames= clsq.getMParNames();
+  vector<string> parnames= clsq->getMParNames();
   vector<string> expected;
   expected.push_back( "Parameter 00" );
-  expected.push_back( "Parameter 01" );
+  expected.push_back( "one" );
   expected.push_back( "Parameter 02" );
-  expected.push_back( "Parameter 03" );
+  expected.push_back( "three" );
   expected.push_back( "Parameter 04" );
   for( size_t i= 0; i < expected.size(); i++ ) {
     BOOST_CHECK_EQUAL( expected[i], parnames[i] );
   }
 }
 BOOST_AUTO_TEST_CASE( testClsqUParNames ) {
-  vector<string> parnames= clsq.getUParNames();
+  vector<string> parnames= clsq->getUParNames();
   vector<string> expected;
-  expected.push_back( "Parameter 00" );
+  expected.push_back( "zero" );
   expected.push_back( "Parameter 01" );
   for( size_t i= 0; i < expected.size(); i++ ) {
     BOOST_CHECK_EQUAL( expected[i], parnames[i] );

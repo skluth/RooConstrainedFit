@@ -1,33 +1,29 @@
 
+// Solver for constrained linear least squares problem
 
 #include "ClsqSolver.hh"
-
 
 using std::string;
 using std::map;
 using std::vector;
 #include <sstream>
 #include <iomanip>
-// using std::ostringstream;
 
-
-
-
+// Ctor:
 ClsqSolver::ClsqSolver( const TVectorD& d, 
 			const TMatrixDSym& c, 
 			const TVectorD& u, 
 			const ConstraintFunction& cfun, 
-			Double_t eps, Int_t mi, Double_t dc,
-			map<int,string> mpn, map<int,string> upn,
-			Int_t ndof ) : 
+			const map<int,string>& upn, 
+			const map<int,string>& mpn,
+			Int_t nd, Int_t mi, Double_t eps, Double_t dc ) :
   data(d), covm(c), upar(u), mpar(d), constraints( cfun, eps ),
-  maxiterations( mi ) {
-
-  mparnames= setParameterNames( mpn, mpar.GetNoElements() );
+  ndof(nd), maxiterations(mi), epsilon(eps), deltachi2(dc) {
   uparnames= setParameterNames( upn, upar.GetNoElements() );
-
+  mparnames= setParameterNames( mpn, mpar.GetNoElements() );
 }
 
+// Helper to setup parameter names:
 vector<string> 
 ClsqSolver::setParameterNames( const map<int,string>& parnamesmap,
 			       Int_t npar ) {
@@ -52,10 +48,10 @@ ClsqSolver::setParameterNames( const map<int,string>& parnamesmap,
 }
 
 
-
-vector<string> ClsqSolver::getMParNames() const {
-  return mparnames;
-}
+// Get parameter names
 vector<string> ClsqSolver::getUParNames() const {
   return uparnames;
+}
+vector<string> ClsqSolver::getMParNames() const {
+  return mparnames;
 }
