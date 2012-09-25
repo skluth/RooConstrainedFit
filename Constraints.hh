@@ -14,9 +14,12 @@ class Constraints {
 
 public:
 
+  // Ctor: construct from constraint function object and optional
+  // precision value:
   Constraints( const ConstraintFunction&, Double_t epsilon=1.0e-4 );
 
-  TVectorD calculate( const TVectorD&, const TVectorD& );
+  // Calculate constraints from measured and unmeasured parameters:
+  TVectorD calculate( const TVectorD& mpar, const TVectorD& upar );
 
 private:
 

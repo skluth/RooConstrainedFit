@@ -1,8 +1,7 @@
-
-
 #ifndef CLSQSOLVER_HH
 #define CLSQSOLVER_hh
 
+// Solver for constrained linear least squares
 
 #include "Constraints.hh"
 #include "ConstraintFunction.hh"
@@ -18,6 +17,8 @@ class ClsqSolver {
 
 public:
 
+  // Ctor: pass input data, constraint function object and optional
+  // parameter name maps mapping parameter number (0-n) to names:
   ClsqSolver( const TVectorD& d, 
 	      const TMatrixDSym& c, 
 	      const TVectorD& u, 
@@ -27,15 +28,18 @@ public:
 	      Int_t nd=0, Int_t mi=100, 
 	      Double_t eps=0.0001, Double_t dc=0.0001 );
   
+  // Accessors:
   std::vector<std::string> getMParNames() const;
   std::vector<std::string> getUParNames() const;
 
 private:
   
+  // Helper to setup parameter names
   std::vector<std::string> 
   setParameterNames( const std::map<int,std::string>& parnames,
 		     Int_t npar );
 			  
+  // Instance variables:
   TVectorD data;
   TMatrixDSym covm;
   TVectorD upar;
