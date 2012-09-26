@@ -27,7 +27,8 @@ $(DEPS): %.d: %.cc
 $(LIB): $(LIBOBJS)
 	$(LD) -shared -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
-$(TESTEXE): $(TESTFILE:.cc=.o) $(LIB)
+# $(TESTEXE): $(TESTFILE:.cc=.o) $(LIB)
+$(TESTEXE): %: %.o $(LIB)
 	$(LD) -o $@ $^ -lboost_unit_test_framework $(LDFLAGS) $(LDLIBS)
 	./$@ --log_level=message
 
