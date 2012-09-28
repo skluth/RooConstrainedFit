@@ -6,21 +6,17 @@
 // S. Kluth 9/2012
 
 #include "Constraints.hh"
-#include "ConstraintFunction.hh"
-
-#include "ClsqSolver.hh"
+#include "Dodo.hh"
+#include "LinearConstraintFunction.hh"
 
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
 using std::string;
 using std::vector;
-using std::map;
 
 #include "TVectorD.h"
 #include "TMatrixDSym.h"
-
 
 // BOOST test stuff:
 #define BOOST_TEST_DYN_LINK
@@ -28,47 +24,7 @@ using std::map;
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
-
-// Test fixture for all tests:
-// Data for tests:
-class Dodo {
-public:
-  Dodo() : xabs(5), data(5), errors(5), upar(2), covm(5) {
-    Double_t x[]= { 1.0, 2.0, 3.0, 4.0, 5.0 };
-    Double_t d[]= { 1.1, 1.9, 2.9, 4.1, 5.1 };
-    Double_t e[]= { 0.1, 0.1, 0.1, 0.1, 0.1 };
-    Double_t u[]= { 0.1, 1.1 };
-    xabs.SetElements( x );
-    data.SetElements( d );
-    errors.SetElements( e );
-    upar.SetElements( u );
-    for( Int_t i= 0; i < 5; i++ ) {
-      covm(i,i)= errors[i]*errors[i];
-    }
-  }
-  TVectorD xabs;
-  TVectorD data;
-  TVectorD errors;
-  TVectorD upar;
-  TMatrixDSym covm;
-};
-// ConstraintFunction subclass for tests:
-class LinearConstraintFunction : public ConstraintFunction {
-public:
-  LinearConstraintFunction( const TVectorD& x ) : xabs( x ) {}
-  virtual TVectorD calculate( const TVectorD& mpar,
-			      const TVectorD& upar ) const {
-    Int_t n= mpar.GetNoElements();
-    TVectorD constraints( n );
-    for( Int_t i= 0; i < n; i++ ) {
-      constraints[i]= upar[0] + upar[1]*xabs[i] - mpar[i];
-    }
-    return constraints;
-  }
-private:
-  TVectorD xabs;
-};
-// Actual test fixture class for boost:
+// Test fixture class for Constrains:
 class ConstraintsTestFixture {
 public:
   ConstraintsTestFixture() : dodo(), 
@@ -99,56 +55,6 @@ BOOST_AUTO_TEST_CASE( testCalculate ) {
   }
 }
 
-// End this suite:
-BOOST_AUTO_TEST_SUITE_END()
-
-// Fixture for next suite:
-class ClsqSolverTestFixture {
-public:
-  ClsqSolverTestFixture() : dodo(), 
-			    lcf( dodo.xabs ) {
-    map<int,string> uparnames;
-    uparnames[0]= "zero";
-    map<int,string> mparnames;
-    mparnames[1]= "one";
-    mparnames[3]= "three";
-    clsq= new ClsqSolver( dodo.data, dodo.covm, dodo.upar, lcf,
-			  uparnames, mparnames );
-    BOOST_MESSAGE( "Create ClsqSolverTestFixture" );
-  }
-  virtual ~ClsqSolverTestFixture() {
-    delete clsq;
-    BOOST_MESSAGE( "Tear down ClsqSolverTestFixture" );
-  }
-  Dodo dodo;
-  LinearConstraintFunction lcf;
-  ClsqSolver* clsq;
-};
-BOOST_FIXTURE_TEST_SUITE( clsqsolversuite, ClsqSolverTestFixture )
-
-
-// Test clsq parameter names:
-BOOST_AUTO_TEST_CASE( testClsqMParNames ) {
-  vector<string> parnames= clsq->getMParNames();
-  vector<string> expected;
-  expected.push_back( "Parameter 00" );
-  expected.push_back( "one" );
-  expected.push_back( "Parameter 02" );
-  expected.push_back( "three" );
-  expected.push_back( "Parameter 04" );
-  for( size_t i= 0; i < expected.size(); i++ ) {
-    BOOST_CHECK_EQUAL( expected[i], parnames[i] );
-  }
-}
-BOOST_AUTO_TEST_CASE( testClsqUParNames ) {
-  vector<string> parnames= clsq->getUParNames();
-  vector<string> expected;
-  expected.push_back( "zero" );
-  expected.push_back( "Parameter 01" );
-  for( size_t i= 0; i < expected.size(); i++ ) {
-    BOOST_CHECK_EQUAL( expected[i], parnames[i] );
-  }
-}
 
 
 BOOST_AUTO_TEST_SUITE_END()

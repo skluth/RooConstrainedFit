@@ -6,10 +6,13 @@ LD = $(CXX)
 CXXFLAGS = -Wall -fPIC
 
 LIBFILES = Constraints.cc ClsqSolver.cc
-TESTFILE = testConstraints.cc
+TESTLIBFILES = Dodo.cc LinearConstraintFunction.cc
+TESTFILE = testConstraints.cc testClsqSolver.cc
 TESTEXE = $(basename $(TESTFILE) )
 LIBOBJS = $(LIBFILES:.cc=.o)
+TESTLIBOBJS = $(TESTLIBFILES:.cc=.o)
 LIB = libRooConstrainedFit.so
+TESTLIB = libRooConstrainedFitTest.so
 DEPS = $(LIBFILES:.cc=.d) $(TESTFILE:.cc=.d)
 PROJECTPATH = $(shell echo $${PWD%/*} )
 CPPFLAGS = -I $(PROJECTPATH)/RooAverageTools
@@ -26,6 +29,7 @@ LDLIBS += -lboost_unit_test_framework
 endif
 LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(PROJECTPATH)/RooAverageTools:$(PROJECTPATH)/INIParser
 
+.INTERMEDIATE: $(LIBOBJS) $(TESTLIBOBJS) $(TESTFILE:.cc=.o)
 
 all: $(TESTEXE)
 
@@ -35,11 +39,13 @@ $(DEPS): %.d: %.cc
 
 $(LIB): $(LIBOBJS)
 	$(LD) -shared -o $@ $^ $(LDFLAGS) $(LDLIBS)
+$(TESTLIB): $(TESTLIBOBJS)
+	$(LD) -shared -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
-$(TESTEXE): %: %.o $(LIB)
+$(TESTEXE): %: %.o $(LIB) $(TESTLIB)
 	$(LD) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH): ./$@ --log_level=message
 
 clean:
-	rm -f *.o $(DEPS) $(TESTEXE) $(LIB)
+	rm -f $(DEPS) $(TESTEXE) $(LIB) $(TESTLIB)
 
