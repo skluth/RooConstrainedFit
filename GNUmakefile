@@ -17,7 +17,7 @@ DEPS = $(LIBFILES:.cc=.d) $(TESTFILE:.cc=.d)
 PROJECTPATH = $(shell echo $${PWD%/*} )
 CPPFLAGS = -I $(PROJECTPATH)/RooAverageTools
 LDFLAGS = -L $(PROJECTPATH)/RooAverageTools
-LDLIBS = -lRooAverageTools -lMatrix
+LDLIBS = -lRooAverageTools -lMatrix -lCore
 ifdef HEPROOT
 CPPFLAGS += -I $(HEPROOT)/include -I $(HEPROOT)/include/boost-1_48/
 LDFLAGS += -L $(HEPROOT)/lib64
