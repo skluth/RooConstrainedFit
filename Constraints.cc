@@ -15,3 +15,13 @@ TVectorD Constraints::calculate( const TVectorD& mpar,
   return constraints;
 }
 
+double Constraints::setH(double eps, double val){
+  
+  double result = eps;
+
+  if (TMath::Abs(val) > 1.0e-6)
+    result *= val;
+
+  return result;
+
+}

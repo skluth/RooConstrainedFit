@@ -7,6 +7,7 @@
 #define CONSTRAINTS_HH
 
 #include "TVectorD.h"
+#include "TMath.h"
 
 class ConstraintFunction;
 
@@ -20,6 +21,8 @@ public:
 
   // Calculate constraints from measured and unmeasured parameters:
   TVectorD calculate( const TVectorD& mpar, const TVectorD& upar );
+
+  static double setH(double eps, double val);
 
 private:
 
