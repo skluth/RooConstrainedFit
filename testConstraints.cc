@@ -56,15 +56,15 @@ BOOST_AUTO_TEST_CASE( testCalculate ) {
   }
 }
 
-BOOST_AUTO_TEST_CASE( testMatrixSet ){
-	TVectorD constraints= cnstr.calculate( dodo.data, dodo.upar );
-	std::cout<<"bla"<<constraints.GetNrows()<<std::endl;
-	TMatrixDSym h = cnstr.derivative(lcf, constraints, constraints);
-	std::cout<<"2"<<std::endl;
-	std::cout<<"h00 "<<h(0,0)<<std::endl;
-	std::cout<<"3"<<std::endl;
-	BOOST_CHECK_MESSAGE(h(0,0) == 0, "h is not 0");
-}
+//BOOST_AUTO_TEST_CASE( testMatrixSet ){
+//	TVectorD constraints= cnstr.calculate( dodo.data, dodo.upar );
+//	std::cout<<"bla"<<constraints.GetNrows()<<std::endl;
+//	TMatrixDSym h = cnstr.derivative(lcf, constraints, constraints);
+//	std::cout<<"2"<<std::endl;
+//	std::cout<<"h00 "<<h(0,0)<<std::endl;
+//	std::cout<<"3"<<std::endl;
+//	BOOST_CHECK_MESSAGE(h(0,0) == 0, "h is not 0");
+//}
 
 //BOOST_AUTO_TEST_CASE( testMatrixSet ){
 //	BOOST_CHECK_MESSAGE(typeid(matrix) == typeid(TMatrixDSym), "matrix not set");
@@ -73,6 +73,20 @@ BOOST_AUTO_TEST_CASE( testMatrixSet ){
 //BOOST_AUTO_TEST_CASE( testVarpar ){
 //	BOOST_CHECK_MESSAGE(, "varpar test failed");
 //}
+BOOST_AUTO_TEST_CASE( test_setH ) {
 
+  double val = 2;
+  double eps = 1;
+  double result = cnstr.setH(eps, val);
+
+  BOOST_CHECK_MESSAGE(result == 2, "large val");
+
+  val = 0.000000001;
+  eps = 1;
+  result = cnstr.setH(eps, val);
+
+  BOOST_CHECK_MESSAGE(result == 1, "small val");
+
+}
 
 BOOST_AUTO_TEST_SUITE_END()
