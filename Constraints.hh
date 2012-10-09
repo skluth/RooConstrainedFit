@@ -7,6 +7,7 @@
 #define CONSTRAINTS_HH
 
 #include "TVectorD.h"
+#include "TMatrixDSym.h"
 #include "TMath.h"
 
 class ConstraintFunction;
@@ -21,6 +22,7 @@ public:
 
   // Calculate constraints from measured and unmeasured parameters:
   TVectorD calculate( const TVectorD& mpar, const TVectorD& upar );
+  TMatrixDSym derivative( const ConstraintFunction& function, TVectorD& varpar, TVectorD& fixpar );
 
   static double setH(double eps, double val);
 
