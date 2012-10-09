@@ -16,6 +16,7 @@ TVectorD Constraints::calculate( const TVectorD& mpar,
   return constraints;
 }
 
+
 TMatrixDSym
 Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, TVectorD& fixpar )
 {
@@ -60,3 +61,25 @@ double Constraints::setH(double eps, double val){
   return result;
 
 }
+
+
+
+
+
+
+
+
+
+TVectorD Constraints::calcM(const TVectorD& varpar, const TVectorD& fixpar){
+
+  return this->calculate(varpar, fixpar);
+
+}
+
+
+TMatrixDSym Constraints::derivativeM(const TVectorD& mpar, const TVectorD& upar){
+
+  this->derivate(Constraints::calcM, mpar, upar);
+
+}
+
