@@ -55,6 +55,21 @@ BOOST_AUTO_TEST_CASE( testCalculate ) {
   }
 }
 
+BOOST_AUTO_TEST_CASE( test_setH ) {
+
+  double val = 2;
+  double eps = 1;
+  double result = cnstr.setH(eps, val);
+
+  BOOST_CHECK_MESSAGE(result == 2, "large val");
+
+  val = 0.000000001;
+  eps = 1;
+  result = cnstr.setH(eps, val);
+
+  BOOST_CHECK_MESSAGE(result == 1, "small val");
+
+}
 
 
 BOOST_AUTO_TEST_SUITE_END()
