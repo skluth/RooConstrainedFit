@@ -31,10 +31,6 @@ public:
   // Accessors:
   std::vector<std::string> getMParNames() const;
   std::vector<std::string> getUParNames() const;
-  void PrintTitle() const;
-  
-
-
 
 private:
   

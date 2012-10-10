@@ -22,7 +22,6 @@ using std::map;
 #define BOOST_TEST_MODULE clsqsolvertests
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
-#include <boost/test/output_test_stream.hpp>
 
 // Fixture for next suite:
 class ClsqSolverTestFixture {
@@ -49,7 +48,6 @@ public:
 BOOST_FIXTURE_TEST_SUITE( clsqsolversuite, ClsqSolverTestFixture )
 
 
-
 // Test clsq parameter names:
 BOOST_AUTO_TEST_CASE( testClsqMParNames ) {
   vector<string> parnames= clsq->getMParNames();
@@ -72,31 +70,6 @@ BOOST_AUTO_TEST_CASE( testClsqUParNames ) {
     BOOST_CHECK_EQUAL( expected[i], parnames[i] );
   }
 }
-
-
-class cout_redirect{
-private:
-  std::streambuf * save;
-public:  
-  cout_redirect(std::streambuf * buffer)
-  {
-    save=std::cout.rdbuf(buffer);
-  }
-  ~cout_redirect(){
-    std::cout.rdbuf(save);
-  }
-};
-
-BOOST_AUTO_TEST_CASE( testClsprintTitle ){
-  boost::test_tools::output_test_stream output;
-  { 
-    cout_redirect testout(output.rdbuf());
-    clsq->PrintTitle();
-    //test the prints
-  }
-  BOOST_CHECK(output.is_equal("Constrained least squares CLSQ\n"));
-}
-
 
 
 BOOST_AUTO_TEST_SUITE_END()
