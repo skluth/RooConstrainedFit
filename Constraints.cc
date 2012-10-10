@@ -17,11 +17,11 @@ TVectorD Constraints::calculate( const TVectorD& mpar,
 }
 
 
-TMatrixDSym
+TMatrixD
 Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, TVectorD& fixpar )
 {
 	unsigned int varpardim = varpar.GetNrows();
-	TMatrixDSym columns(varpardim);
+	std::vector<TVectorD > columns;
 	TVectorD h(varpardim);
 	for(unsigned int iRow = 0; iRow < varpardim; iRow++){
 		h[iRow] = 0;
@@ -29,34 +29,26 @@ Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, T
 	for(unsigned int ipar = 0; ipar < varpardim; ipar++){
 		h[ipar] = setH(this->precision, varpar[ipar]);
 		TVectorD column = fivePointStencil( function, varpar, h, fixpar );
-		for(unsigned int i = 0; i < varpardim; i++){
-			columns(i,ipar) = column[i];
-		}
+			columns.push_back(column);
 		h[ipar] = 0;
 	}
+	double cnstrdim;
+	if(columns.size() > 0){
+		cnstrdim = columns.at(0).GetNrows();
+	}
+	else{
+		cnstrdim = 0;
+	}
+	TMatrixD dcdp(cnstrdim,varpardim);
+	for(int i=0; i<varpardim;i++){
+		for(int j=0; j<cnstrdim; j++){
+			dcdp(j,i) = columns.at(i)[j];
+		}
+	}
 
-	//TMatrixDSym dcdp;
-	//return dcdp;
-	return columns;
+	return dcdp;
 }
 
-//def __derivative( self, function, varpar, fixpar ):
-//    columns= []
-//    varpardim= len(varpar)
-//    h= matrix( zeros( shape=(varpardim,1) ) )
-//    for ipar in range( varpardim ):
-//        h[ipar]= setH( self.__precision, varpar[ipar] )
-//        column= fivePointStencil( function, varpar, h, fixpar )
-//        columns.append( column )
-//        h[ipar]= 0.0
-//    if len(columns) > 0:
-//        cnstrdim= len(columns[0])
-//    else:
-//        cnstrdim= 0
-//    dcdp= matrix( zeros( shape=(cnstrdim,varpardim) ) )
-//    for ipar in range( varpardim ):
-//        dcdp[:,ipar]= columns[ipar]
-//    return dcdp
 
 
 double Constraints::setH(const double& eps, const double& val){
