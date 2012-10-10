@@ -56,8 +56,10 @@ public:
   std::vector<std::string> getUParNames() const;
   void PrintTitle() const;
   
-
-
+  void setUpar(void*, double);
+  void setMpar(void*, double);
+  int parameterIndex(int, std::vector<std::basic_string<char> >);
+  int parameterIndex(std::string, std::vector<std::basic_string<char> >);
 
   Double_t                 getChisq() const;
   Int_t                    getnDoF() const;
