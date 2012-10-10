@@ -16,23 +16,23 @@ TVectorD Constraints::calculate( const TVectorD& mpar,
   return constraints;
 }
 
+
 TMatrixDSym
 Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, TVectorD& fixpar )
 {
-	TMatrixDSym columns;
 	unsigned int varpardim = varpar.GetNrows();
-	TMatrixDSym h(varpardim);
+	TMatrixDSym columns(varpardim);
+	TVectorD h(varpardim);
 	for(unsigned int iRow = 0; iRow < varpardim; iRow++){
-		h(iRow, 0) = 0;
+		h[iRow] = 0;
 	}
 	for(unsigned int ipar = 0; ipar < varpardim; ipar++){
-		std::cout<<varpar[ipar]<<std::endl;
-		h(ipar,0) = setH(this->precision, varpar[ipar]);
+		h[ipar] = setH(this->precision, varpar[ipar]);
 		TVectorD column = fivePointStencil( function, varpar, h, fixpar );
 		for(unsigned int i = 0; i < varpardim; i++){
 			columns(i,ipar) = column[i];
 		}
-		h(ipar,0) = 0;
+		h[ipar] = 0;
 	}
 
 	//TMatrixDSym dcdp;
@@ -58,13 +58,25 @@ Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, T
 //        dcdp[:,ipar]= columns[ipar]
 //    return dcdp
 
-double Constraints::setH(double eps, double val){
-  
-  double result = eps;
 
+double Constraints::setH(const double& eps, const double& val){
+  double result = eps;
   if (TMath::Abs(val) > 1.0e-6)
     result *= val;
 
   return result;
-
 }
+
+TVectorD Constraints::fivePointStencil(const ConstraintFunction& fun, const TVectorD& varpar, const TVectorD& h, const TVectorD& fixpar){
+  TVectorD dfdp = (fun.calculate( varpar + 2.0*h, fixpar ) 
+                   - 8.0*fun.calculate( varpar + h, fixpar ) 
+                   + 8.0*fun.calculate( varpar - h, fixpar )
+                   - fun.calculate( varpar - 2.0*h, fixpar ) );
+  dfdp *= (-1. / (h.Sum() * 12.0 ));
+  return dfdp;
+}
+
+
+
+
+
