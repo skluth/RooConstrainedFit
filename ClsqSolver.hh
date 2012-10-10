@@ -54,6 +54,10 @@ public:
   // Accessors:
   std::vector<std::string> getMParNames() const;
   std::vector<std::string> getUParNames() const;
+  void PrintTitle() const;
+  
+
+
 
   Double_t                 getChisq() const;
   Int_t                    getnDoF() const;
