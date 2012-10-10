@@ -19,12 +19,20 @@ public:
 
   funcobj();
 
-  funcobj( Int_t& ipar, Double_t& val, std::string opt = "u" );
+  funcobj( Int_t& ipar, Double_t& val, std::string opt = "u" )
+    : idx(ipar), value(val), meth(opt)
+  {  }
+
+  Double_t operator()( TVectorD& mpar, TVectorD& upar) {
+    if ( meth == "u") return upar[idx] - value;
+    if ( meth == "m") return mpar[idx] - value;
+  }  
 
 private:
 
-
-  
+  Int_t idx;
+  Double_t value;
+  std::string meth;
   
 };
 
