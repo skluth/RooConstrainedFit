@@ -6,7 +6,6 @@
 using std::string;
 using std::map;
 using std::vector;
-#include <iostream>
 #include <sstream>
 #include <iomanip>
 
@@ -59,30 +58,39 @@ std::vector<string> ClsqSolver::getMParNames() const {
   return mparnames;
 }
 
-void ClsqSolver::PrintTitle() const {
-  std::cout<<"Constrained least squares CLSQ"<<std::endl;
+
+//! group2 modifications
+//! ClsqSolver::setUpar
+//! ClsgSolver::parameterIndex returns int
+void ClsqSolver::setUpar(void* parspec, double val) {
+
+	int ipar = ClsqSolver::parameterIndex(parspec, uparnames);
+	upar[ipar] = val;
+	
+	cout << "Set unmeasured parameter " << uparnames[ipar] << " to " << val << endl;
+	return;
 }
 
-Double_t ClsqSolver::getChisq() const {
-  return chisq < 0 ? 1e-99 : chisq;
-}
 
-Int_t ClsqSolver::getnDoF() const {
-  return ndof < 0 ? -1 : ndof;
-}
+//! ClsqSolver::setMpar
+//! ClsgSolver::parameterIndex returns int
+void ClsqSolver::setMpar(void* parspec, double val) {
 
-TVectorD ClsqSolver::getUParv() const{
-  return upar;
+	int ipar = ClsqSolver::parameterIndex(parspec, mparnames);
+	upar[ipar] = val;
+	
+	cout << "Set measured parameter " << mparnames[ipar] << " to " << val << endl;
+	return;
 }
+       
+//! ClsgSolver::parameterIndex returns int
+//! for int parspec  
+int ClsqSolver::parameterIndex(int parspec, std::vector<std::string> parnames) {
+  return parspec;
+}
+//! for string parspec
+int ClsqSolver::parameterIndex(string parspec, std::vector<std::string> parnames) {
 
-double* ClsqSolver::getUPar() {
-  return upar.GetMatrixArray();
+	for (int ipar = 0; ipar < parnames -> Size(); ipar++) if (parnames[ipar] == parspec) return ipar;
 }
-
-double* ClsqSolver::getMPar() {
-  return mpar.GetMatrixArray();
-}
-
-TMatrixDSym ClsqSolver::getCovMatrix() const{
-  return covm;
-}
+>>>>>>> group2
