@@ -332,5 +332,9 @@ testClsqSolver.o: testClsqSolver.cc ClsqSolver.hh Constraints.hh \
  /cvmfs/sft.cern.ch/lcg/hepsoft/0.6/x86_64-slc5-gcc46-opt/include/boost-1_48/boost/utility/swap.hpp \
  /cvmfs/sft.cern.ch/lcg/hepsoft/0.6/x86_64-slc5-gcc46-opt/include/boost-1_48/boost/type.hpp \
  /cvmfs/sft.cern.ch/lcg/hepsoft/0.6/x86_64-slc5-gcc46-opt/include/boost-1_48/boost/test/framework.hpp \
+<<<<<<< HEAD
  /cvmfs/sft.cern.ch/lcg/hepsoft/0.6/x86_64-slc5-gcc46-opt/include/boost-1_48/boost/config/auto_link.hpp \
  /cvmfs/sft.cern.ch/lcg/hepsoft/0.6/x86_64-slc5-gcc46-opt/include/boost-1_48/boost/test/output_test_stream.hpp
+=======
+ /cvmfs/sft.cern.ch/lcg/hepsoft/0.6/x86_64-slc5-gcc46-opt/include/boost-1_48/boost/config/auto_link.hpp
+>>>>>>> eac28d84465b200d93ecd11a9d26734d77eaf231

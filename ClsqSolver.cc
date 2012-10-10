@@ -17,9 +17,11 @@ ClsqSolver::ClsqSolver( const TVectorD& d,
 			const ConstraintFunction& cfun, 
 			const map<int,string>& upn, 
 			const map<int,string>& mpn,
-			Int_t nd, Int_t mi, Double_t eps, Double_t dc ) :
-  data(d), covm(c), upar(u), mpar(d), constraints( cfun, eps ),
-  ndof(nd), maxiterations(mi), epsilon(eps), deltachi2(dc) {
+			Int_t nd, Int_t mi, Double_t eps, Double_t dc )
+  : data(d), covm(c), upar(u), mpar(d), constraints( cfun, eps ),
+    ndof(nd), maxiterations(mi), epsilon(eps), deltachi2(dc) 
+{
+  chisq = -1e99;
   uparnames= setParameterNames( upn, upar.GetNoElements() );
   mparnames= setParameterNames( mpn, mpar.GetNoElements() );
 }
@@ -50,13 +52,38 @@ ClsqSolver::setParameterNames( const map<int,string>& parnamesmap,
 
 
 // Get parameter names
-vector<string> ClsqSolver::getUParNames() const {
+std::vector<string> ClsqSolver::getUParNames() const {
   return uparnames;
 }
-vector<string> ClsqSolver::getMParNames() const {
+std::vector<string> ClsqSolver::getMParNames() const {
   return mparnames;
 }
 
+<<<<<<< HEAD
 void ClsqSolver::PrintTitle() const {
   std::cout<<"Constrained least squares CLSQ"<<std::endl;
+=======
+Double_t ClsqSolver::getChisq() const {
+  return chisq < 0 ? 1e-99 : chisq;
+}
+
+Int_t ClsqSolver::getnDoF() const {
+  return ndof < 0 ? -1 : ndof;
+}
+
+TVectorD ClsqSolver::getUParv() const{
+  return upar;
+}
+
+double* ClsqSolver::getUPar() {
+  return upar.GetMatrixArray();
+}
+
+double* ClsqSolver::getMPar() {
+  return mpar.GetMatrixArray();
+}
+
+TMatrixDSym ClsqSolver::getCovMatrix() const{
+  return covm;
+>>>>>>> eac28d84465b200d93ecd11a9d26734d77eaf231
 }
