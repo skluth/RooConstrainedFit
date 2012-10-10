@@ -24,11 +24,10 @@ public:
   // Calculate constraints from measured and unmeasured parameters:
   TVectorD calculate( const TVectorD& mpar, const TVectorD& upar );
   TMatrixD derivative( const ConstraintFunction& function, const TVectorD& varpar, const TVectorD& fixpar );
-
-  static double setH(double eps, double val);
-
   TMatrixD derivativeM(const TVectorD& mpar, const TVectorD& upar);
   TMatrixD derivativeU(const TVectorD& mpar, const TVectorD& upar);
+  TVectorD fivePointStencil(const ConstraintFunction& fun, const TVectorD& varpar, const TVectorD& h, const TVectorD& fixpar);
+  double setH(const double& eps, const double& val);
 
 private:
 

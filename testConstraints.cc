@@ -17,6 +17,7 @@ using std::vector;
 
 #include "TVectorD.h"
 #include "TMatrixDSym.h"
+#include "TMatrixD.h"
 
 // BOOST test stuff:
 #define BOOST_TEST_DYN_LINK
@@ -56,25 +57,23 @@ BOOST_AUTO_TEST_CASE( testCalculate ) {
   }
 }
 
-//BOOST_AUTO_TEST_CASE( testMatrixSet ){
-//	TVectorD constraints= cnstr.calculate( dodo.data, dodo.upar );
-//	std::cout<<"bla"<<constraints.GetNrows()<<std::endl;
-//	TMatrixDSym h = cnstr.derivative(lcf, constraints, constraints);
-//	std::cout<<"2"<<std::endl;
-//	std::cout<<"h00 "<<h(0,0)<<std::endl;
-//	std::cout<<"3"<<std::endl;
-//	BOOST_CHECK_MESSAGE(h(0,0) == 0, "h is not 0");
-//}
 
-//BOOST_AUTO_TEST_CASE( testMatrixSet ){
-//	BOOST_CHECK_MESSAGE(typeid(matrix) == typeid(TMatrixDSym), "matrix not set");
-//}
-//
-//BOOST_AUTO_TEST_CASE( testVarpar ){
-//	BOOST_CHECK_MESSAGE(, "varpar test failed");
-//}
+BOOST_AUTO_TEST_CASE( testDerivative ){
+	double xArray[3] = {1.,0.,0.};
+	double varparArray[3] = {1.,1.,1.};
+	double mparArray[3] = {0.,1.,0.};
+	TVectorD x = TVectorD(3,xArray);
+	TVectorD vpar = TVectorD(3,varparArray);
+	TVectorD fixpar = TVectorD(3,mparArray);
+	lcf = LinearConstraintFunction(x);
+	TMatrixDSym h = cnstr.derivative(lcf, vpar, fixpar);
+	//std::cout<<h(2,2)<<std::endl;
+	BOOST_CHECK_MESSAGE(h(0,0) == 0, "h is not 0: " << h(0,0));
+}
+
 
 BOOST_AUTO_TEST_CASE( test_setH ) {
+
 
   double val = 2;
   double eps = 1;
@@ -82,12 +81,16 @@ BOOST_AUTO_TEST_CASE( test_setH ) {
 
   BOOST_CHECK_MESSAGE(result == 2, "large val");
 
-  val = 0.000000001;
-  eps = 1;
-  result = cnstr.setH(eps, val);
+}
+
+
+BOOST_AUTO_TEST_CASE( test_setHSmallVal ) {
+
+  double val = 0.000000001;
+  double eps = 1;
+  double result = cnstr.setH(eps, val);
 
   BOOST_CHECK_MESSAGE(result == 1, "small val");
-
 }
 
 
@@ -146,6 +149,16 @@ BOOST_AUTO_TEST_CASE( test_derivativeU ) {
 }
 
 
+BOOST_AUTO_TEST_CASE( testFivarpardimvePointStencil ) {
+  Double_t ha[] = {1.,0.,0.,0.,0.};
+  TVectorD h(5, ha);
+  TVectorD points = cnstr.fivePointStencil( lcf, dodo.data, h, dodo.upar );
+  Double_t ex[]= {-1.};
+  TVectorD expected( 1, ex );
+  for( Int_t i= 0; i < expected.GetNoElements(); i++ ) {
+    BOOST_CHECK_CLOSE( expected[i], points[i], 0.0001 );
+  }
+}
 
 
 BOOST_AUTO_TEST_SUITE_END()
