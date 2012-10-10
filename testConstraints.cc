@@ -8,6 +8,7 @@
 #include "Constraints.hh"
 #include "Dodo.hh"
 #include "LinearConstraintFunction.hh"
+#include "ConstraintFunction.hh"
 
 #include <iostream>
 #include <string>
@@ -56,21 +57,6 @@ BOOST_AUTO_TEST_CASE( testCalculate ) {
     BOOST_CHECK_CLOSE( expected[i], constraints[i], 0.0001 );
   }
 }
-
-
-BOOST_AUTO_TEST_CASE( testDerivative ){
-	double xArray[3] = {1.,0.,0.};
-	double varparArray[3] = {1.,1.,1.};
-	double mparArray[3] = {0.,1.,0.};
-	TVectorD x = TVectorD(3,xArray);
-	TVectorD vpar = TVectorD(3,varparArray);
-	TVectorD fixpar = TVectorD(3,mparArray);
-	lcf = LinearConstraintFunction(x);
-	TMatrixDSym h = cnstr.derivative(lcf, vpar, fixpar);
-	//std::cout<<h(2,2)<<std::endl;
-	BOOST_CHECK_MESSAGE(h(0,0) == 0, "h is not 0: " << h(0,0));
-}
-
 
 BOOST_AUTO_TEST_CASE( test_setH ) {
 

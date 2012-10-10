@@ -13,6 +13,29 @@
 #include <map>
 #include <vector>
 
+class funcobj{
+
+public:
+
+  funcobj();
+
+  funcobj( Int_t& ipar, Double_t& val, std::string opt = "u" )
+    : idx(ipar), value(val), meth(opt)
+  {  }
+
+  Double_t operator()( TVectorD& mpar, TVectorD& upar) {
+    if ( meth == "u") return upar[idx] - value;
+    if ( meth == "m") return mpar[idx] - value;
+  }  
+
+private:
+
+  Int_t idx;
+  Double_t value;
+  std::string meth;
+  
+};
+
 class ClsqSolver {
 
 public:
@@ -31,6 +54,20 @@ public:
   // Accessors:
   std::vector<std::string> getMParNames() const;
   std::vector<std::string> getUParNames() const;
+  void PrintTitle() const;
+  
+
+
+
+  Double_t                 getChisq() const;
+  Int_t                    getnDoF() const;
+  TVectorD                 getUParv() const;
+  double*                  getUPar();
+  double*                  getMPar();
+  double*                  getMparErrors() const;
+  TMatrixDSym              getUparErrorMatrix() const;
+  TMatrixDSym              getMparErrorMatrix() const;
+  TMatrixDSym              getCovMatrix() const;
 
 private:
   
@@ -41,19 +78,31 @@ private:
 			  
   // Instance variables:
   TVectorD data;
-  TMatrixDSym covm;
+  TMatrixDSym covm, invm;
   TVectorD upar;
   TVectorD mpar;
   Constraints constraints;
   std::vector<std::string> uparnames;
   std::vector<std::string> mparnames;
-  TMatrixDSym invm;
   Int_t ndof;
   Int_t maxiterations;
-  Double_t epsilon;
-  Double_t deltachi2;
   Int_t niterations;
+  Double_t epsilon;
+  Double_t chisq;
+  Double_t deltachi2;
 
+  std::map<int,funcobj> fixedUparFunctions;
+  std::map<int,funcobj> fixedMparFunctions;
+
+  // Instance Methods
+  Double_t calcChisq( TVectorD& dcdmpm, Double_t c33 );
+  void solve( Bool_t& lpr, Bool_t& lBlobel);
+  void solveByInversion( TVectorD& dcdmpm,  TVectorD& dcdupm, TVectorD& constrv );
+  void solveByPartition( TVectorD& dcdmpm, TVectorD& dcdupm, TVectorD& constrv );
+
+  void prepareDeltapar( Int_t& datadim, Int_t& upardim, Int_t& constrdim,
+			Double_t& c11, Double_t& c21, Double_t& c31, 
+			Double_t& c32, Double_t& c33, TVectorD& constrv );
 };
 
 
