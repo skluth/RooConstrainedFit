@@ -21,6 +21,8 @@ using std::map;
 // BOOST test stuff:
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE clsqsolvertests
+#define SOLUTION_OK 0
+
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 #include <boost/test/output_test_stream.hpp>
@@ -43,10 +45,32 @@ public:
     delete clsq;
     BOOST_MESSAGE( "Tear down ClsqSolverTestFixture" );
   }
+  void CheckSolution();
   Dodo dodo;
   LinearConstraintFunction lcf;
   ClsqSolver* clsq;
 };
+
+void ClsqSolverTestFixture::CheckSolution(){
+//	BOOST_FAIL("test not ready yet");
+	double* mpar = clsq->getMPar();
+	double* upar = clsq->getUPar();
+	double expectedmpar[5] = {0.98, 2.0, 3.02, 4.04, 5.06};
+	double expectedupar[2] = {-0.04, 1.02};
+	char err_message[50];
+	
+	for(int i=0;i<5;i++){
+		sprintf(err_message,"mpar number %d is not expected!",i);
+		BOOST_CHECK_MESSAGE(expectedmpar[i]==mpar[i], err_message);
+	}
+	for(int i=0;i<2;i++){
+		sprintf(err_message,"upar number %d is not expected!",i);
+		BOOST_CHECK_MESSAGE(expectedupar[i]==upar[i], err_message);
+		
+	}
+}
+
+
 BOOST_FIXTURE_TEST_SUITE( clsqsolversuite, ClsqSolverTestFixture )
 
 
@@ -135,24 +159,10 @@ BOOST_AUTO_TEST_CASE( test_clsqSolverInversion){
 }
 
 BOOST_AUTO_TEST_CASE( test_clsqSolverPartition){
-  BOOST_FAIL("test not ready yet");
+  CheckSolution();
 }
 
 BOOST_AUTO_TEST_CASE( test_checkSolution){
-//	BOOST_FAIL("test not ready yet");
-	double* mpar = clsq->getMPar();
-	double* upar = clsq->getUPar();
-	double expectedmpar[5] = {0.98, 2.0, 3.02, 4.04, 5.06};
-	double expectedupar[2] = {-0.04, 1.02};
-	char err_message[50];
-	for(int i=0;i<5;i++){
-		sprintf(err_message,"mpar number %d is not expected!",i);
-		BOOST_CHECK_MESSAGE(expectedmpar[i]==mpar[i], err_message);
-	}
-	for(int i=0;i<2;i++){
-		sprintf(err_message,"upar number %d is not expected!",i);
-		BOOST_CHECK_MESSAGE(expectedupar[i]==upar[i], err_message);
-	}
 }
 
 BOOST_AUTO_TEST_SUITE_END()
