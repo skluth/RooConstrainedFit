@@ -6,7 +6,6 @@
 using std::string;
 using std::map;
 using std::vector;
-#include <iostream>
 #include <sstream>
 #include <iomanip>
 
@@ -57,6 +56,37 @@ vector<string> ClsqSolver::getMParNames() const {
   return mparnames;
 }
 
-void ClsqSolver::PrintTitle() const {
-  std::cout<<"Constrained least squares CLSQ"<<std::endl;
+
+//! group2 modifications
+//! ClsqSolver::setUpar
+//! ClsgSolver::parameterIndex returns int
+void ClsqSolver::setUpar(void* parspec, double val) {
+
+	int ipar = ClsqSolver::parameterIndex(parspec, uparnames);
+	upar[ipar] = val;
+	
+	cout << "Set unmeasured parameter " << uparnames[ipar] << " to " << val << endl;
+	return;
+}
+
+//! ClsqSolver::setMpar
+//! ClsgSolver::parameterIndex returns int
+void ClsqSolver::setMpar(void* parspec, double val) {
+
+	int ipar = ClsqSolver::parameterIndex(parspec, mparnames);
+	upar[ipar] = val;
+	
+	cout << "Set measured parameter " << mparnames[ipar] << " to " << val << endl;
+	return;
+}
+       
+//! ClsgSolver::parameterIndex returns int
+//! for int parspec  
+int ClsqSolver::parameterIndex(int parspec, std::vector<std::string> parnames) {
+  return parspec;
+}
+//! for string parspec
+int ClsqSolver::parameterIndex(string parspec, std::vector<std::string> parnames) {
+
+	for (int ipar = 0; ipar < parnames -> Size(); ipar++) if (parnames[ipar] == parspec) return ipar;
 }
