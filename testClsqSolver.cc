@@ -109,7 +109,13 @@ BOOST_AUTO_TEST_CASE( testClsprintTitle ){
   BOOST_CHECK(output.is_equal("Constrained least squares CLSQ\n"));
 }
 
-BOOST_AUTO_TEST_CASE( testsolve ){
+BOOST_AUTO_TEST_CASE( test_setparnames ){
+
+  BOOST_FAIL("test not ready");
+}
+
+BOOST_AUTO_TEST_CASE( test_solve ){
+  BOOST_FAIL("test not ready");
 }
 
 BOOST_AUTO_TEST_CASE( test_calculate){
