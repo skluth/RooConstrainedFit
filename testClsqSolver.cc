@@ -27,7 +27,7 @@ using std::map;
 // Fixture for next suite:
 class ClsqSolverTestFixture {
 public:
-  ClsqSolverTestFixture() : dodo(), 
+  ClsqSolverTestFixture() : dodo(),
 			    lcf( dodo.xabs ) {
     map<int,string> uparnames;
     uparnames[0]= "zero";
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE( testgetUParV ){
 class cout_redirect{
 private:
   std::streambuf * save;
-public:  
+public:
   cout_redirect(std::streambuf * buffer)
   {
     save=std::cout.rdbuf(buffer);
@@ -101,7 +101,7 @@ public:
 
 BOOST_AUTO_TEST_CASE( testClsprintTitle ){
   boost::test_tools::output_test_stream output;
-  { 
+  {
     cout_redirect testout(output.rdbuf());
     clsq->PrintTitle();
     //test the prints
@@ -109,6 +109,35 @@ BOOST_AUTO_TEST_CASE( testClsprintTitle ){
   BOOST_CHECK(output.is_equal("Constrained least squares CLSQ\n"));
 }
 
+BOOST_AUTO_TEST_CASE( testsolve ){
+}
 
+BOOST_AUTO_TEST_CASE( test_calculate){
+  BOOST_FAIL("test not ready");
+}
+
+BOOST_AUTO_TEST_CASE( test_derivativeM){
+BOOST_FAIL("test not ready yet");
+}
+
+BOOST_AUTO_TEST_CASE( test_derivativeU){ 
+BOOST_FAIL("test not ready yet");
+}
+
+BOOST_AUTO_TEST_CASE( test_setUp){
+BOOST_FAIL("test not ready yet");
+}
+
+BOOST_AUTO_TEST_CASE( test_clsqSolverInversion){ 
+BOOST_FAIL("test not ready yet");
+}
+
+BOOST_AUTO_TEST_CASE( test_clsqSolverPartition){
+BOOST_FAIL("test not ready yet");
+}
+
+BOOST_AUTO_TEST_CASE( test_checkSolution){
+BOOST_FAIL("test not ready yet");
+}
 
 BOOST_AUTO_TEST_SUITE_END()
