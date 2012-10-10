@@ -89,15 +89,19 @@ BOOST_AUTO_TEST_CASE( test_derivativeM ) {
   int row_num = 5;
 
 
-  TMatrixD derivative = derivativeM(mpar, upar);
+  TMatrixD derivative = cnstr.derivativeM(mpar, upar);
 
-  double tmp = [-1., 0., 0., 0., 0.,
+
+  BOOST_CHECK_MESSAGE(derivative.GetNcols() == col_num && derivative.GetNrows() == row_num, "dim test");
+
+
+  double tmp[] = {-1., 0., 0., 0., 0.,
 		0., -1., 0., 0., 0.,
 		0., 0., -1., 0., 0.,
 		0., 0., 0., -1., 0.,
-		0., 0., 0., 0., -1.];
+		0., 0., 0., 0., -1.};
 
-  TMatrixD expected = (row_num, col_num, tmp);  
+  TMatrixD expected(row_num, col_num, tmp);  
 
   for( int i= 0; i < row_num; i++ ) {
     for( int j= 0; j < col_num; j++ ) {
@@ -116,15 +120,20 @@ BOOST_AUTO_TEST_CASE( test_derivativeU ) {
   int col_num = 2;
   int row_num = 5;
 
-  TMatrixD derivative = derivativeU(mpar, upar);
+  TMatrixD derivative = cnstr.derivativeU(mpar, upar);
+  
+  std::cout << "col: " << derivative.GetNcols() << std::endl;
+  std::cout << "row: " << derivative.GetNrows() << std::endl;
 
-  double tmp =  [1.0, 1.0,
+  BOOST_CHECK_MESSAGE(derivative.GetNcols() == col_num && derivative.GetNrows() == row_num, "dim test");
+
+  double tmp[] =  {1.0, 1.0,
 		 1.0, 2.0,
 		 1.0, 3.0,
 		 1.0, 4.0,
-		 1.0, 5.0];
+		 1.0, 5.0};
   
-  TMatrixD expected = (row_num, col_num, tmp);  
+  TMatrixD expected(row_num, col_num, tmp);  
 
   for( int i= 0; i < row_num; i++ ) {
     for( int j= 0; j < col_num; j++ ) {

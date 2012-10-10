@@ -17,7 +17,7 @@ TVectorD Constraints::calculate( const TVectorD& mpar,
 }
 
 
-TMatrixD Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, TVectorD& fixpar )
+TMatrixD Constraints::derivative( const ConstraintFunction& function, const TVectorD& varpar, const TVectorD& fixpar )
 {
 	unsigned int varpardim = varpar.GetNrows();
 	std::vector<TVectorD > columns;
