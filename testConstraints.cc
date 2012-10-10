@@ -18,7 +18,6 @@ using std::vector;
 
 #include "TVectorD.h"
 #include "TMatrixDSym.h"
-#include "TMatrixD.h"
 
 // BOOST test stuff:
 #define BOOST_TEST_DYN_LINK
@@ -58,8 +57,25 @@ BOOST_AUTO_TEST_CASE( testCalculate ) {
   }
 }
 
-BOOST_AUTO_TEST_CASE( test_setH ) {
+//BOOST_AUTO_TEST_CASE( testDerivative ){
+//	TVectorD vpar = dodo.data;
+//	TVectorD fixpar = dodo.upar;
+//
+//	TMatrixD h = cnstr.derivative(lcf, vpar, fixpar);
+//	for(int i=0; i<3;i++){
+//		for(int j=0; j<5; j++){
+//			std::cout<<h(j,i)<<" ";
+//		}
+//		std::cout<<std::endl;
+//	}
+//	BOOST_CHECK_MESSAGE(h(0,0) == 0, "h is not 0: " << h(0,0));
+//}
 
+
+
+
+
+BOOST_AUTO_TEST_CASE( test_setHLargeVal ) {
 
   double val = 2;
   double eps = 1;
@@ -69,7 +85,6 @@ BOOST_AUTO_TEST_CASE( test_setH ) {
 
 }
 
-
 BOOST_AUTO_TEST_CASE( test_setHSmallVal ) {
 
   double val = 0.000000001;
@@ -78,62 +93,6 @@ BOOST_AUTO_TEST_CASE( test_setHSmallVal ) {
 
   BOOST_CHECK_MESSAGE(result == 1, "small val");
 }
-
-
-BOOST_AUTO_TEST_CASE( test_derivativeM ) {
-
-
-  TVectorD mpar = dodo.data;
-  TVectorD upar = dodo.upar;
-  int col_num = 5;
-  int row_num = 5;
-
-
-  TMatrixD derivative = derivativeM(mpar, upar);
-
-  double tmp = [-1., 0., 0., 0., 0.,
-		0., -1., 0., 0., 0.,
-		0., 0., -1., 0., 0.,
-		0., 0., 0., -1., 0.,
-		0., 0., 0., 0., -1.];
-
-  TMatrixD expected = (row_num, col_num, tmp);  
-
-  for( int i= 0; i < row_num; i++ ) {
-    for( int j= 0; j < col_num; j++ ) {
-    BOOST_CHECK_CLOSE( expected[i][j], derivative[i][j], 0.0001 );
-    }
-  }
-
-}
-
-
-BOOST_AUTO_TEST_CASE( test_derivativeU ) {
-
-
-  TVectorD mpar = dodo.data;
-  TVectorD upar = dodo.upar;
-  int col_num = 2;
-  int row_num = 5;
-
-  TMatrixD derivative = derivativeU(mpar, upar);
-
-  double tmp =  [1.0, 1.0,
-		 1.0, 2.0,
-		 1.0, 3.0,
-		 1.0, 4.0,
-		 1.0, 5.0];
-  
-  TMatrixD expected = (row_num, col_num, tmp);  
-
-  for( int i= 0; i < row_num; i++ ) {
-    for( int j= 0; j < col_num; j++ ) {
-    BOOST_CHECK_CLOSE( expected[i][j], derivative[i][j], 0.0001 );
-    }
-  }
-
-}
-
 
 BOOST_AUTO_TEST_CASE( testFivarpardimvePointStencil ) {
   Double_t ha[] = {1.,0.,0.,0.,0.};
@@ -145,6 +104,4 @@ BOOST_AUTO_TEST_CASE( testFivarpardimvePointStencil ) {
     BOOST_CHECK_CLOSE( expected[i], points[i], 0.0001 );
   }
 }
-
-
 BOOST_AUTO_TEST_SUITE_END()
