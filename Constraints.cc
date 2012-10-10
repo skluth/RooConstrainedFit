@@ -16,6 +16,7 @@ TVectorD Constraints::calculate( const TVectorD& mpar,
   return constraints;
 }
 
+
 TMatrixDSym
 Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, TVectorD& fixpar )
 {
@@ -67,3 +68,25 @@ TVectorD Constraints::fivePointsStencil(const ConstraintFunction& fun, const TVe
   dfdp *= (-1. / (h.Sum() * 12.0 ));
   return dfdp;
 }
+
+
+
+
+
+
+
+
+
+TVectorD Constraints::calcM(const TVectorD& varpar, const TVectorD& fixpar){
+
+  return this->calculate(varpar, fixpar);
+
+}
+
+
+TMatrixDSym Constraints::derivativeM(const TVectorD& mpar, const TVectorD& upar){
+
+  this->derivate(Constraints::calcM, mpar, upar);
+
+}
+

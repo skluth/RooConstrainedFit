@@ -26,6 +26,12 @@ public:
   TVectorD fivePointsStencil(const ConstraintFunction& fun, const TVectorD& varpar, const TVectorD& h, const TVectorD& fixpar);
   double setH(const double& eps, const double& val);
 
+  VectorD Constraints::calcM(const TVectorD& varpar, const TVectorD& fixpar);
+  VectorD Constraints::calcU(const TVectorD& varpar, const TVectorD& fixpar);
+
+  TMatrixDSym derivativeM(const TVectorD& mpar, const TVectorD& upar);
+  TMatrixDSym derivativeU(const TVectorD& mpar, const TVectorD& upar);
+
 private:
 
   const ConstraintFunction& fun;
