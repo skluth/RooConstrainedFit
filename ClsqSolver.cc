@@ -59,10 +59,10 @@ std::vector<string> ClsqSolver::getMParNames() const {
   return mparnames;
 }
 
-<<<<<<< HEAD
 void ClsqSolver::PrintTitle() const {
   std::cout<<"Constrained least squares CLSQ"<<std::endl;
-=======
+}
+
 Double_t ClsqSolver::getChisq() const {
   return chisq < 0 ? 1e-99 : chisq;
 }
@@ -85,5 +85,4 @@ double* ClsqSolver::getMPar() {
 
 TMatrixDSym ClsqSolver::getCovMatrix() const{
   return covm;
->>>>>>> eac28d84465b200d93ecd11a9d26734d77eaf231
 }
