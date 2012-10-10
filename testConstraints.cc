@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE( testCalculate ) {
 //BOOST_AUTO_TEST_CASE( testVarpar ){
 //	BOOST_CHECK_MESSAGE(, "varpar test failed");
 //}
-BOOST_AUTO_TEST_CASE( test_setH ) {
+BOOST_AUTO_TEST_CASE( test_setHLargeVal ) {
 
   double val = 2;
   double eps = 1;
@@ -81,12 +81,25 @@ BOOST_AUTO_TEST_CASE( test_setH ) {
 
   BOOST_CHECK_MESSAGE(result == 2, "large val");
 
-  val = 0.000000001;
-  eps = 1;
-  result = cnstr.setH(eps, val);
-
-  BOOST_CHECK_MESSAGE(result == 1, "small val");
-
 }
 
+BOOST_AUTO_TEST_CASE( test_setHSmallVal ) {
+
+  double val = 0.000000001;
+  double eps = 1;
+  double result = cnstr.setH(eps, val);
+
+  BOOST_CHECK_MESSAGE(result == 1, "small val");
+}
+
+BOOST_AUTO_TEST_CASE( testFivePointsStencil ) {
+  Double_t ha[] = {1.,0.,0.,0.,0.};
+  TVectorD h(5, ha);
+  TVectorD points = cnstr.fivePointsStencil( lcf, dodo.data, h, dodo.upar );
+  Double_t ex[]= {-1.};
+  TVectorD expected( 1, ex );
+  for( Int_t i= 0; i < expected.GetNoElements(); i++ ) {
+    BOOST_CHECK_CLOSE( expected[i], points[i], 0.0001 );
+  }
+}
 BOOST_AUTO_TEST_SUITE_END()
