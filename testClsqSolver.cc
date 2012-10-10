@@ -73,6 +73,18 @@ BOOST_AUTO_TEST_CASE( testClsqUParNames ) {
   }
 }
 
+BOOST_AUTO_TEST_CASE( testGetChiq ){
+  BOOST_CHECK_EQUAL( clsq->getChisq(),  -1e99 );
+}
+
+BOOST_AUTO_TEST_CASE( testnDoF ){
+  BOOST_CHECK_EQUAL( clsq->getnDoF(), 0 );
+}
+
+BOOST_AUTO_TEST_CASE( testgetUParV ){
+  std::cout << clsq->getCovMatrix().GetMatrixArray() << std::endl;
+  BOOST_CHECK_MESSAGE( !clsq->getCovMatrix().GetMatrixArray()  , "No CovMatrix found");
+}
 
 class cout_redirect{
 private:

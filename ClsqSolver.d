@@ -1,4 +1,5 @@
 ClsqSolver.o: ClsqSolver.cc ClsqSolver.hh Constraints.hh \
+<<<<<<< HEAD
  /opt/root.5.32/include/TVectorD.h /opt/root.5.32/include/TVectorT.h \
  /opt/root.5.32/include/TMatrixT.h /opt/root.5.32/include/TMatrixTBase.h \
  /opt/root.5.32/include/TNamed.h /opt/root.5.32/include/TObject.h \
@@ -26,3 +27,6 @@ ClsqSolver.o: ClsqSolver.cc ClsqSolver.hh Constraints.hh \
  /opt/root.5.32/include/TMatrixDSparse.h \
  /opt/root.5.32/include/TMatrixDSparsefwd.h ConstraintFunction.hh \
  /opt/root.5.32/include/TMatrixD.h
+=======
+ ConstraintFunction.hh
+>>>>>>> eac28d84465b200d93ecd11a9d26734d77eaf231

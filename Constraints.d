@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Constraints.o: Constraints.cc Constraints.hh \
  /opt/root.5.32/include/TVectorD.h /opt/root.5.32/include/TVectorT.h \
  /opt/root.5.32/include/TMatrixT.h /opt/root.5.32/include/TMatrixTBase.h \
@@ -25,3 +26,6 @@ Constraints.o: Constraints.cc Constraints.hh \
  /opt/root.5.32/include/TMatrixDSymfwd.h \
  /opt/root.5.32/include/TMatrixDSparse.h \
  /opt/root.5.32/include/TMatrixDSparsefwd.h ConstraintFunction.hh
+=======
+Constraints.o: Constraints.cc Constraints.hh ConstraintFunction.hh
+>>>>>>> eac28d84465b200d93ecd11a9d26734d77eaf231

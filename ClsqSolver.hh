@@ -36,6 +36,16 @@ public:
 
 
 
+  Double_t                 getChisq() const;
+  Int_t                    getnDoF() const;
+  TVectorD                 getUParv() const;
+  double*                  getUPar();
+  double*                  getMPar();
+  double*                  getMparErrors() const;
+  TMatrixDSym              getUparErrorMatrix() const;
+  TMatrixDSym              getMparErrorMatrix() const;
+  TMatrixDSym              getCovMatrix() const;
+
 private:
   
   // Helper to setup parameter names
@@ -55,6 +65,7 @@ private:
   Int_t ndof;
   Int_t maxiterations;
   Double_t epsilon;
+  Double_t chisq;
   Double_t deltachi2;
   Int_t niterations;
 
