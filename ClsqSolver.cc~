@@ -6,7 +6,6 @@
 using std::string;
 using std::map;
 using std::vector;
-#include <iostream>
 #include <sstream>
 #include <iomanip>
 
@@ -55,8 +54,4 @@ vector<string> ClsqSolver::getUParNames() const {
 }
 vector<string> ClsqSolver::getMParNames() const {
   return mparnames;
-}
-
-void ClsqSolver::PrintTitle() const {
-  std::cout<<"Constrained least squares CLSQ"<<std::endl;
 }
