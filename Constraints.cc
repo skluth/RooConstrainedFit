@@ -17,8 +17,7 @@ TVectorD Constraints::calculate( const TVectorD& mpar,
 }
 
 
-TMatrixD
-Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, TVectorD& fixpar )
+TMatrixD Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, TVectorD& fixpar )
 {
 	unsigned int varpardim = varpar.GetNrows();
 	std::vector<TVectorD > columns;
@@ -50,7 +49,6 @@ Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, T
 }
 
 
-
 double Constraints::setH(const double& eps, const double& val){
   double result = eps;
   if (TMath::Abs(val) > 1.0e-6)
@@ -58,6 +56,21 @@ double Constraints::setH(const double& eps, const double& val){
 
   return result;
 }
+
+
+TMatrixD Constraints::derivativeM(const TVectorD& mpar, const TVectorD& upar){
+
+  return this->derivative(fun, mpar, upar);
+
+}
+
+
+TMatrixD Constraints::derivativeU(const TVectorD& mpar, const TVectorD& upar){
+
+  return this->derivative(fun, upar, mpar);
+
+}
+
 
 TVectorD Constraints::fivePointStencil(const ConstraintFunction& fun, const TVectorD& varpar, const TVectorD& h, const TVectorD& fixpar){
   TVectorD dfdp = (fun.calculate( varpar + 2.0*h, fixpar ) 
@@ -67,8 +80,6 @@ TVectorD Constraints::fivePointStencil(const ConstraintFunction& fun, const TVec
   dfdp *= (-1. / (h.Sum() * 12.0 ));
   return dfdp;
 }
-
-
 
 
 
