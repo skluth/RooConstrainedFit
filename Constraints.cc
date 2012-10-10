@@ -19,17 +19,25 @@ TVectorD Constraints::calculate( const TVectorD& mpar,
 TMatrixDSym
 Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, TVectorD& fixpar )
 {
-	TVectorD columns;
+	TMatrixDSym columns;
 	unsigned int varpardim = varpar.GetNrows();
-	std::cout<<varpardim<<std::endl;
-	TMatrixDSym h(varpardim, 1);
+	TMatrixDSym h(varpardim);
 	for(unsigned int iRow = 0; iRow < varpardim; iRow++){
 		h(iRow, 0) = 0;
+	}
+	for(unsigned int ipar = 0; ipar < varpardim; ipar++){
+		std::cout<<varpar[ipar]<<std::endl;
+		h(ipar,0) = setH(this->precision, varpar[ipar]);
+		TVectorD column = fivePointStencil( function, varpar, h, fixpar );
+		for(unsigned int i = 0; i < varpardim; i++){
+			columns(i,ipar) = column[i];
+		}
+		h(ipar,0) = 0;
 	}
 
 	//TMatrixDSym dcdp;
 	//return dcdp;
-	return h;
+	return columns;
 }
 
 //def __derivative( self, function, varpar, fixpar ):
