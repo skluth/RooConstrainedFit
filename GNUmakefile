@@ -34,8 +34,7 @@ LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(PROJECTPATH)/RooAverageTools:$(PROJECTPA
 all: $(TESTEXE)
 
 $(DEPS): %.d: %.cc
-	$(CXX) $(CPPFLAGS) -MM $< -MF $@
--include $(DEPS)
+	$(CXX) $(CPPFLAGS) -MM $< -MF $@ -include $(DEPS)
 
 $(LIB): $(LIBOBJS)
 	$(LD) -shared -o $@ $^ $(LDFLAGS) $(LDLIBS)

@@ -26,8 +26,8 @@ public:
 
   static double setH(double eps, double val);
 
-  VectorD Constraints::calcM(const TVectorD& varpar, const TVectorD& fixpar);
-  VectorD Constraints::calcU(const TVectorD& varpar, const TVectorD& fixpar);
+  TVectorD calcM(const TVectorD& varpar, const TVectorD& fixpar);
+  TVectorD calcU(const TVectorD& varpar, const TVectorD& fixpar);
 
   TMatrixDSym derivativeM(const TVectorD& mpar, const TVectorD& upar);
   TMatrixDSym derivativeU(const TVectorD& mpar, const TVectorD& upar);
