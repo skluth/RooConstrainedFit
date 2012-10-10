@@ -111,7 +111,7 @@ BOOST_AUTO_TEST_CASE( test_derivativeM ) {
 
 }
 
-
+/*
 BOOST_AUTO_TEST_CASE( test_derivativeU ) {
 
 
@@ -142,7 +142,7 @@ BOOST_AUTO_TEST_CASE( test_derivativeU ) {
   }
 
 }
-
+*/
 
 BOOST_AUTO_TEST_CASE( testFivarpardimvePointStencil ) {
   Double_t ha[] = {1.,0.,0.,0.,0.};
