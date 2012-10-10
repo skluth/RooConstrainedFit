@@ -8,6 +8,7 @@
 
 #include "TVectorD.h"
 #include "TMatrixDSym.h"
+#include "TMatrixD.h"
 #include "TMath.h"
 
 class ConstraintFunction;
@@ -22,15 +23,12 @@ public:
 
   // Calculate constraints from measured and unmeasured parameters:
   TVectorD calculate( const TVectorD& mpar, const TVectorD& upar );
-  TMatrixDSym derivative( const ConstraintFunction& function, TVectorD& varpar, TVectorD& fixpar );
+  TMatrixD derivative( const ConstraintFunction& function, const TVectorD& varpar, const TVectorD& fixpar );
 
   static double setH(double eps, double val);
 
-  VectorD Constraints::calcM(const TVectorD& varpar, const TVectorD& fixpar);
-  VectorD Constraints::calcU(const TVectorD& varpar, const TVectorD& fixpar);
-
-  TMatrixDSym derivativeM(const TVectorD& mpar, const TVectorD& upar);
-  TMatrixDSym derivativeU(const TVectorD& mpar, const TVectorD& upar);
+  TMatrixD derivativeM(const TVectorD& mpar, const TVectorD& upar);
+  TMatrixD derivativeU(const TVectorD& mpar, const TVectorD& upar);
 
 private:
 

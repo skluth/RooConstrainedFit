@@ -16,9 +16,14 @@ TVectorD Constraints::calculate( const TVectorD& mpar,
   return constraints;
 }
 
+TMatrixD Constraints::derivative( const ConstraintFunction& function, const TVectorD& varpar, const TVectorD& fixpar ){
 
-TMatrixDSym
-Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, TVectorD& fixpar )
+  return TMatrixD();
+
+}
+
+/*
+TMatrixD Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, TVectorD& fixpar )
 {
 	TVectorD columns;
 	unsigned int varpardim = varpar.GetNrows();
@@ -32,7 +37,7 @@ Constraints::derivative( const ConstraintFunction& function, TVectorD& varpar, T
 	//return dcdp;
 	return h;
 }
-
+*/
 //def __derivative( self, function, varpar, fixpar ):
 //    columns= []
 //    varpardim= len(varpar)
@@ -66,20 +71,16 @@ double Constraints::setH(double eps, double val){
 
 
 
+TMatrixD Constraints::derivativeM(const TVectorD& mpar, const TVectorD& upar){
 
-
-
-
-TVectorD Constraints::calcM(const TVectorD& varpar, const TVectorD& fixpar){
-
-  return this->calculate(varpar, fixpar);
+  return this->derivative(fun, mpar, upar);
 
 }
 
 
-TMatrixDSym Constraints::derivativeM(const TVectorD& mpar, const TVectorD& upar){
+TMatrixD Constraints::derivativeU(const TVectorD& mpar, const TVectorD& upar){
 
-  this->derivate(Constraints::calcM, mpar, upar);
+  return this->derivative(fun, upar, mpar);
 
 }
 

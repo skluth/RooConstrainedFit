@@ -73,6 +73,7 @@ BOOST_AUTO_TEST_CASE( testCalculate ) {
 //BOOST_AUTO_TEST_CASE( testVarpar ){
 //	BOOST_CHECK_MESSAGE(, "varpar test failed");
 //}
+
 BOOST_AUTO_TEST_CASE( test_setH ) {
 
   double val = 2;
@@ -88,5 +89,63 @@ BOOST_AUTO_TEST_CASE( test_setH ) {
   BOOST_CHECK_MESSAGE(result == 1, "small val");
 
 }
+
+
+BOOST_AUTO_TEST_CASE( test_derivativeM ) {
+
+
+  TVectorD mpar = dodo.data;
+  TVectorD upar = dodo.upar;
+  int col_num = 5;
+  int row_num = 5;
+
+
+  TMatrixD derivative = derivativeM(mpar, upar);
+
+  double tmp = [-1., 0., 0., 0., 0.,
+		0., -1., 0., 0., 0.,
+		0., 0., -1., 0., 0.,
+		0., 0., 0., -1., 0.,
+		0., 0., 0., 0., -1.];
+
+  TMatrixD expected = (row_num, col_num, tmp);  
+
+  for( int i= 0; i < row_num; i++ ) {
+    for( int j= 0; j < col_num; j++ ) {
+    BOOST_CHECK_CLOSE( expected[i][j], derivative[i][j], 0.0001 );
+    }
+  }
+
+}
+
+
+BOOST_AUTO_TEST_CASE( test_derivativeU ) {
+
+
+  TVectorD mpar = dodo.data;
+  TVectorD upar = dodo.upar;
+  int col_num = 2;
+  int row_num = 5;
+
+  TMatrixD derivative = derivativeU(mpar, upar);
+
+  double tmp =  [1.0, 1.0,
+		 1.0, 2.0,
+		 1.0, 3.0,
+		 1.0, 4.0,
+		 1.0, 5.0];
+  
+  TMatrixD expected = (row_num, col_num, tmp);  
+
+  for( int i= 0; i < row_num; i++ ) {
+    for( int j= 0; j < col_num; j++ ) {
+    BOOST_CHECK_CLOSE( expected[i][j], derivative[i][j], 0.0001 );
+    }
+  }
+
+}
+
+
+
 
 BOOST_AUTO_TEST_SUITE_END()
