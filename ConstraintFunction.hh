@@ -15,4 +15,21 @@ public:
 };
 
 
+class ConstraintFunctionSwaped : public ConstraintFunction {
+
+private:
+  const ConstraintFunction * real_fun;
+
+public:
+
+  ConstraintFunctionSwaped(const ConstraintFunction * fun);
+  TVectorD calculate( const TVectorD&, const TVectorD& ) const;
+
+};
+
+
+
+
+
 #endif
+

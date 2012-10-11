@@ -12,6 +12,7 @@
 #include "TMath.h"
 
 class ConstraintFunction;
+class ConstraintFunctionSwaped;
 
 class Constraints {
 
@@ -33,6 +34,7 @@ public:
 private:
 
   const ConstraintFunction& fun;
+  const ConstraintFunctionSwaped& funs;
   Double_t precision;
 
 };

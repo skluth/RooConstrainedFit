@@ -8,13 +8,17 @@
 #include "TVectorD.h"
 
 Constraints::Constraints( const ConstraintFunction& cf, Double_t epsilon ) :
-  fun( cf ), precision( epsilon ) {}
+  fun( cf ), funs(*new ConstraintFunctionSwaped(&cf)), precision( epsilon ) {
+}
 
 TVectorD Constraints::calculate( const TVectorD& mpar,
 				 const TVectorD& upar ) {
   TVectorD constraints= fun.calculate( mpar, upar );
   return constraints;
 }
+
+
+
 
 
 TMatrixD Constraints::derivative( const ConstraintFunction& function, const TVectorD& varpar, const TVectorD& fixpar )
@@ -67,7 +71,7 @@ TMatrixD Constraints::derivativeM(const TVectorD& mpar, const TVectorD& upar){
 
 TMatrixD Constraints::derivativeU(const TVectorD& mpar, const TVectorD& upar){
 
-  return this->derivative(fun, upar, mpar);
+  return this->derivative((ConstraintFunction&)funs, upar, mpar);
 
 }
 
