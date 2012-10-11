@@ -86,3 +86,6 @@ double* ClsqSolver::getMPar() {
 TMatrixDSym ClsqSolver::getCovMatrix() const{
   return covm;
 }
+
+void ClsqSolver::solve(Bool_t &lpr, Bool_t &lBlobel){
+}

@@ -155,16 +155,15 @@ BOOST_AUTO_TEST_CASE( test_setUp){
 }
 
 BOOST_AUTO_TEST_CASE( test_clsqSolverInversion){ 
-  clsq->solveByInversion( TVectorD& dcdmpm,  TVectorD& dcdupm, TVectorD& constrv );
+	Bool_t lpr = false, lBlobel = false;
+	clsq->solve(lpr,lBlobel);
   CheckSolution();
 }
 
 BOOST_AUTO_TEST_CASE( test_clsqSolverPartition){
-  //  clsq->solveByPartition( TVectorD& dcdmpm, TVectorD& dcdupm, TVectorD& constrv );
+	Bool_t lpr = false, lBlobel = true;
+	clsq->solve(lpr,lBlobel);
   CheckSolution();
-}
-
-BOOST_AUTO_TEST_CASE( test_checkSolution){
 }
 
 BOOST_AUTO_TEST_SUITE_END()
