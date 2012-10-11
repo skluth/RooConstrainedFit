@@ -156,6 +156,8 @@ BOOST_AUTO_TEST_CASE( test_setUp){
 
 BOOST_AUTO_TEST_CASE( test_clsqSolverInversion){ 
   BOOST_FAIL("test not ready yet");
+	clsq->solve();
+	CheckSolution();
 }
 
 BOOST_AUTO_TEST_CASE( test_clsqSolverPartition){
