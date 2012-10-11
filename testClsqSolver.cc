@@ -164,7 +164,4 @@ BOOST_AUTO_TEST_CASE( test_clsqSolverPartition){
   CheckSolution();
 }
 
-BOOST_AUTO_TEST_CASE( test_checkSolution){
-}
-
 BOOST_AUTO_TEST_SUITE_END()

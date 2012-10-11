@@ -83,7 +83,8 @@ public:
   void fixUpar(std::string parspec, Double_t *val=NULL, Bool_t lpr=true );
   void releaseUpar(Int_t parspec, Bool_t lpr=true );
   void releaseUpar(std::string parspec, Bool_t lpr=true );
-    //def prepareRhsv( self, dim, datadim, upardim, constrv ):
+  TVectorD prepareRhsv(Int_t dim, Int_t datadim, Int_t upardim, TVectorD constrv ); //returns a (0,...,0,(constrv))
+
     //def calcChisq( self, dcdmpm, c33 ):
     //def getConstraints( self ):
     //def getErrorMatrix( self ):
