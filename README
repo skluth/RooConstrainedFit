@@ -1,0 +1,9 @@
+#!/bin/bash
+
+####################################################
+# to compile export these paths or adjust GNUMakefile
+# or make README executable
+
+PATH_TO_INIPARSER=../INIParser
+PATH_TO_ROOAVERAGETOOLS=../RooAverageTools
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:PATH_TO_INIPARSER:PATH_TO_ROOAVERAGETOOLS
