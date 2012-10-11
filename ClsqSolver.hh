@@ -13,6 +13,8 @@
 #include <map>
 #include <vector>
 
+using namespace std;
+
 class funcobj{
 
 public:
