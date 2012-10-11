@@ -59,7 +59,7 @@ std::vector<string> ClsqSolver::getMParNames() const {
   return mparnames;
 }
 
-void ClsqSolver::PrintTitle() const {
+void ClsqSolver::printTitle() const {
   std::cout<<"Constrained least squares CLSQ"<<std::endl;
 }
 

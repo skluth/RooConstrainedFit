@@ -128,7 +128,7 @@ BOOST_AUTO_TEST_CASE( testClsprintTitle ){
   boost::test_tools::output_test_stream output;
   {
     cout_redirect testout(output.rdbuf());
-    clsq->PrintTitle();
+    clsq->printTitle();
     //test the prints
   }
   BOOST_CHECK(output.is_equal("Constrained least squares CLSQ\n"));
@@ -155,12 +155,12 @@ BOOST_AUTO_TEST_CASE( test_setUp){
 }
 
 BOOST_AUTO_TEST_CASE( test_clsqSolverInversion){ 
-  BOOST_FAIL("test not ready yet");
-	clsq->solve();
-	CheckSolution();
+  clsq->solveByInversion( TVectorD& dcdmpm,  TVectorD& dcdupm, TVectorD& constrv );
+  CheckSolution();
 }
 
 BOOST_AUTO_TEST_CASE( test_clsqSolverPartition){
+  //  clsq->solveByPartition( TVectorD& dcdmpm, TVectorD& dcdupm, TVectorD& constrv );
   CheckSolution();
 }
 
