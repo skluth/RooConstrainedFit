@@ -110,7 +110,7 @@ private:
   
   // Helper to setup parameter names
   std::vector<std::string> 
-  setParNames( const std::map<int,std::string>& parnames,
+  setParameterNames( const std::map<int,std::string>& parnames,
 		     Int_t npar );
 			  
   // Instance variables:
@@ -136,7 +136,7 @@ private:
   void solveByInversion( TVectorD& dcdmpm,  TVectorD& dcdupm, TVectorD& constrv );
   Int_t parameterIndex(std::string parspec);
   Int_t parameterIndex(Int_t parspec);
-	void printPars(double *par, double* parerrs, std::vector<std::string> &parnames,std::map<int,funcobj> fixedParFunctions, char* ffmt="%.4f", Bool_t pulls=false);
+	void printPars(double *par, double* parerrs, std::vector<std::string> &parnames,std::map<int,funcobj> fixedParFunctions, const char* ffmt="%.4f", Bool_t pulls=false);
     //def __setParNames( self, parnames, npar ):
     //def __printPars( self, par, parerrs, parnames, fixedParFunctions,
     //def __printMatrix( self, m, ffmt, names ):
