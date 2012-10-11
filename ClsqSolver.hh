@@ -86,14 +86,14 @@ public:
   TVectorD prepareRhsv(Int_t dim, Int_t datadim, Int_t upardim, TVectorD constrv ); //returns a (0,...,0,(constrv))
   Double_t calcChisq(TMatrixD dcdmpm , Double_t c33);
   TVectorD getConstraints();
-    //def getErrorMatrix( self ):
-    //def getUparCorrMatrix( self ):
-    //def getMparCorrMatrix( self ):
-    //def getCorrMatrix( self ):
+  // getErrorMatrix( );
+  // getUparCorrMatrix( );
+  // getMparCorrMatrix( );
+  // getCorrMatrix( );
   TMatrixDSym getCovm() const;
   TMatrixDSym getInvm() const;
   TVectorD getData() const;
-    //def getMparPulls( self ):
+    //def getMparPulls( );
     //def makeInverseProblemMatrix( self, dcdmpm, dcdupm ):
     //def setUpar( self, parspec, val ):
     //def setMpar( self, parspec, val ):
