@@ -84,16 +84,15 @@ public:
   void releaseUpar(Int_t parspec, Bool_t lpr=true );
   void releaseUpar(std::string parspec, Bool_t lpr=true );
   TVectorD prepareRhsv(Int_t dim, Int_t datadim, Int_t upardim, TVectorD constrv ); //returns a (0,...,0,(constrv))
-
-    //def calcChisq( self, dcdmpm, c33 ):
-    //def getConstraints( self ):
+  Double_t calcChisq(TMatrixD dcdmpm , Double_t c33);
+  TVectorD getConstraints();
     //def getErrorMatrix( self ):
     //def getUparCorrMatrix( self ):
     //def getMparCorrMatrix( self ):
     //def getCorrMatrix( self ):
-    //def getCovm( self ):
-    //def getInvm( self ):
-    //def getData( self ):
+  TMatrixDSym getCovm() const;
+  TMatrixDSym getInvm() const;
+  TVectorD getData() const;
     //def getMparPulls( self ):
     //def makeInverseProblemMatrix( self, dcdmpm, dcdupm ):
     //def setUpar( self, parspec, val ):
