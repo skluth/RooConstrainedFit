@@ -5,9 +5,9 @@
 LD = $(CXX)
 CXXFLAGS = -Wall -fPIC -g
 
-LIBFILES = Constraints.cc ClsqSolver.cc
-TESTLIBFILES = Dodo.cc LinearConstraintFunction.cc ConstraintFunction.cc
-TESTFILE = testConstraints.cc testClsqSolver.cc
+LIBFILES = Constraints.cc ClsqSolver.cc parspec.cc
+TESTLIBFILES = Dodo.cc LinearConstraintFunction.cc
+TESTFILE = testConstraints.cc testClsqSolver.cc testparspec.cc
 TESTEXE = $(basename $(TESTFILE) )
 LIBOBJS = $(LIBFILES:.cc=.o)
 TESTLIBOBJS = $(TESTLIBFILES:.cc=.o)
@@ -34,7 +34,8 @@ LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(PROJECTPATH)/RooAverageTools:$(PROJECTPA
 all: $(TESTEXE)
 
 $(DEPS): %.d: %.cc
-	$(CXX) $(CPPFLAGS) -MM $< -MF $@ -include $(DEPS)
+	$(CXX) $(CPPFLAGS) -MM $< -MF $@ 
+-include $(DEPS)
 
 $(LIB): $(LIBOBJS)
 	$(LD) -shared -o $@ $^ $(LDFLAGS) $(LDLIBS)
