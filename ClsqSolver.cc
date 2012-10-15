@@ -18,8 +18,7 @@ ClsqSolver::ClsqSolver( const TVectorD& d,
 			const map<int,string>& mpn,
 			Int_t nd, Int_t mi, Double_t eps, Double_t dc )
   : data(d), covm(c), upar(u), mpar(d), constraints( cfun, eps ),
-    ndof(nd), maxiterations(mi), epsilon(eps), deltachi2(dc) 
-{
+    ndof(nd), maxiterations(mi), epsilon(eps), deltachi2(dc) {
   chisq = -1e99;
   uparnames= setParameterNames( upn, upar.GetNoElements() );
   mparnames= setParameterNames( mpn, mpar.GetNoElements() );

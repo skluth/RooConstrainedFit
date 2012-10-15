@@ -63,15 +63,15 @@ public:
   int parameterIndex(int, std::vector<std::basic_string<char> >);
   int parameterIndex(std::string, std::vector<std::basic_string<char> >);
 
-  Double_t                 getChisq() const;
-  Int_t                    getnDoF() const;
-  TVectorD                 getUParv() const;
-  double*                  getUPar();
-  double*                  getMPar();
-  double*                  getMparErrors() const;
-  TMatrixDSym              getUparErrorMatrix() const;
-  TMatrixDSym              getMparErrorMatrix() const;
-  TMatrixDSym              getCovMatrix() const;
+  // Double_t                 getChisq() const;
+  // Int_t                    getnDoF() const;
+  // TVectorD                 getUParv() const;
+  // double*                  getUPar();
+  // double*                  getMPar();
+  // double*                  getMparErrors() const;
+  // TMatrixDSym              getUparErrorMatrix() const;
+  // TMatrixDSym              getMparErrorMatrix() const;
+  // TMatrixDSym              getCovMatrix() const;
 
 private:
   
@@ -99,14 +99,16 @@ private:
   std::map<int,funcobj> fixedMparFunctions;
 
   // Instance Methods
-  Double_t calcChisq( TVectorD& dcdmpm, Double_t c33 );
-  void solve( Bool_t& lpr, Bool_t& lBlobel);
-  void solveByInversion( TVectorD& dcdmpm,  TVectorD& dcdupm, TVectorD& constrv );
-  void solveByPartition( TVectorD& dcdmpm, TVectorD& dcdupm, TVectorD& constrv );
+  // Double_t calcChisq( TVectorD& dcdmpm, Double_t c33 );
+  // void solve( Bool_t& lpr, Bool_t& lBlobel);
+  // void solveByInversion( TVectorD& dcdmpm,  TVectorD& dcdupm, TVectorD& constrv );
+  // void solveByPartition( TVectorD& dcdmpm, TVectorD& dcdupm, TVectorD& constrv );
 
-  void prepareDeltapar( Int_t& datadim, Int_t& upardim, Int_t& constrdim,
-			Double_t& c11, Double_t& c21, Double_t& c31, 
-			Double_t& c32, Double_t& c33, TVectorD& constrv );
+  // void prepareDeltapar( Int_t& datadim, Int_t& upardim, Int_t& constrdim,
+  // 			Double_t& c11, Double_t& c21, Double_t& c31, 
+  // 			Double_t& c32, Double_t& c33, TVectorD& constrv );
+
+
 };
 
 
